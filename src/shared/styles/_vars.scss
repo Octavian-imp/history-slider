@@ -1,0 +1,11 @@
+:root {
+  --max-container-width: 1440px;
+}
+
+$breakpoint: 1920px;
+
+@media (max-width: $breakpoint) {
+  :root {
+    --max-container-width: 100vw;
+  }
+}

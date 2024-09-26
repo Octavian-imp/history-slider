@@ -1,24 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import HistorySlider from "./components/slider";
+import mockStore from "./mock/store";
+import styles from "./App.module.scss";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={styles.main_wrapper}>
+      <span className={styles.center_line__vertical}></span>
+      <div className={styles.content}>
+        <span className={styles.center_line__horizontal}></span>
+        <h1 className={styles.content__title}>Исторические даты</h1>
+
+        <HistorySlider dataset={mockStore} />
+      </div>
     </div>
   );
 }

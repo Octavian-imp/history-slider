@@ -1,0 +1,309 @@
+@use "../../shared/styles/colors" as clr;
+@use "../../shared/styles/mixins/pxToRem.scss" as *;
+@use "../../shared/styles/_fonts.scss" as *;
+@use "../../shared/styles/_vars.scss" as *;
+
+// пагинация
+.pagination__container {
+  position: relative;
+  .pagination__year {
+    position: absolute;
+    user-select: none;
+    pointer-events: none;
+    display: flex;
+    @include pxToRem(gap, 110);
+    @include pt-bold;
+    top: 45%;
+    left: 50%;
+    transform: translateY(-50%) translateX(calc(-50% - 40px));
+    .year {
+      &_start,
+      &_end {
+        @include pxToRem(font-size, 200);
+        @include pxToRem(line-height, 160);
+        letter-spacing: -2%;
+      }
+      &_start {
+        color: clr.$blue;
+      }
+      &_end {
+        color: clr.$fuschia-100;
+      }
+    }
+    @media (max-width: $breakpoint) {
+      & {
+        position: initial;
+        left: 0;
+        transform: none;
+        top: 0;
+        @include pxToRem(gap, 20);
+        .year {
+          &_start,
+          &_end {
+            @include pxToRem(font-size, 56);
+            line-height: normal;
+          }
+        }
+      }
+    }
+  }
+  .pagination__track {
+    $offset-rotate: -30.5deg;
+    position: relative;
+    left: 50%;
+    transform: translateX(calc(-50% - 40px)) rotate($offset-rotate);
+    border-radius: 50%;
+    border: 1px solid rgba(clr.$blackBlue, 0.5);
+    @include pxToRem(height, 530);
+    @include pxToRem(width, 530);
+    display: flex;
+    gap: 2rem;
+    .track__bullet {
+      $calcRotateDeg: calc((360deg / var(--track-max) * var(--track-indx)));
+      height: 50%;
+      left: calc(50%);
+      transform-origin: 50% 100%;
+      transform: rotate($calcRotateDeg);
+      background-color: clr.$blackBlue;
+      position: absolute;
+      z-index: 10;
+      &-btn {
+        transform: rotate(calc(($calcRotateDeg * -1) + $offset-rotate * -1));
+        background-color: clr.$blackBlue;
+        border-radius: 50%;
+        transition: all 0.3s ease-out;
+        @include pxToRem(height, 6);
+        @include pxToRem(width, 6);
+        position: absolute;
+        @include pxToRem(top, -3);
+        border: 0;
+        span {
+          display: none;
+          opacity: 0;
+          transition: all 0.3s ease-out;
+        }
+        &:hover,
+        &-active {
+          cursor: pointer;
+          scale: 2;
+          background-color: #fff;
+          span {
+            transition: all 0.3s ease-out;
+            background-color: #fff;
+            border: 1px solid clr.$blackBlue;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            opacity: 1;
+            justify-content: center;
+            position: relative;
+            @include pxToRem(height, 28);
+            @include pxToRem(width, 28);
+            @include pxToRem(top, -10);
+            @include pxToRem(left, -9);
+          }
+        }
+      }
+    }
+    @media (max-width: $breakpoint) {
+      & {
+        display: none;
+      }
+    }
+  }
+  @media (max-width: $breakpoint) {
+    & {
+      order: 2;
+    }
+  }
+}
+
+// слайдер
+.slider_layout {
+  display: flex;
+  flex-direction: column;
+
+  @include pxToRem(gap, 56);
+  .slider__actions {
+    display: flex;
+    flex-direction: column;
+    @include pxToRem(gap, 20);
+
+    .change_data__button {
+      display: flex;
+      @include pxToRem(gap, 20);
+
+      .change_data__button-prev,
+      .change_data__button-next {
+        background-color: #fff;
+        @include pxToRem(height, 50);
+        @include pxToRem(width, 50);
+        border: 1px solid rgba(clr.$blackBlue, 0.5);
+        border-radius: 50%;
+        position: relative;
+        cursor: pointer;
+        @media (max-width: $breakpoint) {
+          & {
+            @include pxToRem(height, 25);
+            @include pxToRem(width, 25);
+          }
+        }
+      }
+
+      .change_data__button-prev:before,
+      .change_data__button-next:before {
+        content: "";
+        position: absolute;
+        top: calc(50% + 1px);
+        @include pxToRem(width, 10);
+        @include pxToRem(height, 10);
+        @media (max-width: $breakpoint) {
+          & {
+            @include pxToRem(width, 5);
+            @include pxToRem(height, 5);
+          }
+        }
+      }
+
+      .change_data__button-prev:before {
+        left: calc(50% + 1px);
+        border-left: 2px solid rgba(clr.$blackBlue, 0.5);
+        border-bottom: 2px solid rgba(clr.$blackBlue, 0.5);
+        transform: translateX(-50%) translateY(-50%) rotate(45deg);
+      }
+
+      .change_data__button-next:before {
+        left: calc(50% - 1px);
+        border-right: 2px solid rgba(clr.$blackBlue, 0.5);
+        border-bottom: 2px solid rgba(clr.$blackBlue, 0.5);
+        transform: translateX(-50%) translateY(-50%) rotate(-45deg);
+      }
+
+      .change_data__button-disabled {
+        opacity: 0.5;
+      }
+      @media (max-width: $breakpoint) {
+        & {
+          @include pxToRem(gap, 8);
+        }
+      }
+    }
+
+    @media (max-width: $breakpoint) {
+      & {
+        @include pxToRem(gap, 10);
+      }
+    }
+  }
+  .slider__thumbs {
+    display: none;
+    align-items: center;
+    align-content: center;
+    @include pxToRem(gap, 10);
+
+    .slider__thumb_dot {
+      background-color: rgba(clr.$blackBlue, 0.5);
+      @include pxToRem(height, 6);
+      @include pxToRem(width, 6);
+      border-radius: 50%;
+      transition: all 0.2s ease;
+      &--active {
+        background-color: clr.$blackBlue;
+      }
+    }
+    @media (max-width: $breakpoint) {
+      & {
+        display: flex;
+      }
+    }
+  }
+
+  .history_slider__HOC {
+    display: flex;
+    align-items: center;
+    position: relative;
+    .history_slider {
+      max-width: calc(100% - 80px);
+      margin-left: 0;
+      z-index: 1;
+
+      .history_slider__wrapper {
+        .history_slide {
+          display: flex;
+          flex-direction: column;
+          @include pxToRem(row-gap, 16);
+
+          .slide__title {
+            @include bebas-neue-reg;
+            @include pxToRem(font-size, 25);
+            line-height: 120%;
+            color: clr.$blue;
+            @media (max-width: $breakpoint) {
+              & {
+                @include pxToRem(font-size, 16);
+              }
+            }
+          }
+          .slide__content {
+            @include pxToRem(font-size, 20);
+            @include pxToRem(line-height, 30);
+            text-wrap: balance;
+            @media (max-width: $breakpoint) {
+              & {
+                @include pxToRem(font-size, 14);
+                line-height: 145%;
+              }
+            }
+          }
+        }
+      }
+    }
+    @media (max-width: $breakpoint) {
+      & {
+        .slide__button {
+          display: none;
+        }
+        .history_slider {
+          max-width: 100%;
+        }
+      }
+    }
+  }
+  .slide__button-prev,
+  .slide__button-next {
+    @include pxToRem(height, 40);
+    @include pxToRem(width, 40);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border-radius: 50%;
+    border: 0;
+    box-shadow: 0 0 15px rgba(clr.$blackBlue, 0.1);
+    cursor: pointer;
+    top: 50%;
+  }
+  .slide__button-disabled {
+    display: none;
+    opacity: 0;
+  }
+
+  .slide__button-prev {
+    transform: rotate(180deg);
+  }
+  .slide__button {
+    &_disabled {
+      display: none;
+      opacity: 0;
+    }
+  }
+
+  @media (max-width: $breakpoint) {
+    & {
+      order: 4;
+      flex-direction: column-reverse;
+      @include pxToRem(margin-top, 20);
+      @include pxToRem(gap, 78);
+    }
+  }
+}

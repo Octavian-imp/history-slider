@@ -1,0 +1,100 @@
+@use "./shared/styles/mixins/pxToRem.scss" as *;
+@use "./shared/styles/_colors.scss" as clr;
+@use "./shared/styles/_fonts.scss" as *;
+@use "./shared/styles/_vars.scss" as *;
+
+.center_line__vertical {
+  height: 100vh;
+  width: 1px;
+  background-color: rgba(clr.$blackBlue, 0.5);
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  @media (max-width: $breakpoint) {
+    & {
+      display: none;
+    }
+  }
+}
+
+.main_wrapper {
+  min-height: 100vh;
+  margin-left: max(0px, calc((100vw - 320px) / 10 * 2));
+  border-left: 1px solid rgba(clr.$blackBlue, 0.5);
+  border-right: 1px solid rgba(clr.$blackBlue, 0.5);
+  display: flex;
+  width: fit-content;
+  position: relative;
+  &:before {
+    $width: 5;
+    content: "";
+    display: block;
+    background: clr.$gradient;
+    position: absolute;
+    left: $width / 2 * -1px;
+    z-index: 1;
+    @include pxToRem(top, 177);
+    @include pxToRem(height, 120);
+    @include pxToRem(width, $width);
+  }
+
+  .content {
+    $offset-left: 80;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    max-width: var(--max-container-width);
+    @include pxToRem(margin-left, $offset-left);
+    @include pxToRem(margin-top, 170);
+    position: relative;
+    .center_line__horizontal {
+      width: calc(var(--max-container-width) + ($offset-left * 1px));
+      height: 1px;
+      background-color: rgba(clr.$blackBlue, 0.5);
+      position: absolute;
+      top: 16.5rem;
+      left: calc($offset-left * -1px);
+      transform: translateY(-50%);
+      @media (max-width: $breakpoint) {
+        & {
+          order: 3;
+          position: initial;
+          width: calc(var(--max-container-width) - 40px);
+        }
+      }
+    }
+    &__title {
+      line-height: 120%;
+      @include pxToRem(font-size, 56);
+      @include pxToRem(max-width, 353);
+      position: absolute;
+      @media (max-width: $breakpoint) {
+        & {
+          @include pxToRem(font-size, 20);
+          position: initial;
+          text-wrap: balance;
+          @include pxToRem(max-width, 120);
+          order: 1;
+        }
+      }
+    }
+
+    @media (max-width: $breakpoint) {
+      & {
+        @include pxToRem(margin-left, 20);
+        @include pxToRem(margin-top, 60);
+      }
+    }
+  }
+
+  @media (max-width: $breakpoint) {
+    & {
+      border: 0;
+      margin: 0;
+      &:before {
+        display: none;
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+@use "./shared/styles/_fonts.scss" as fonts;
+@use "./shared/styles/_colors.scss" as clr;
+
+h1 {
+  margin: 0;
+}
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  color: clr.$blackBlue;
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  @include fonts.pt-reg;
+  background-color: #fff;
+}
+
+body,
+#root {
+  min-height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}

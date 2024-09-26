@@ -1,0 +1,3 @@
+@mixin pxToRem($property, $value) {
+  #{$property}: $value / 16 * 1rem;
+}
